@@ -9,6 +9,38 @@ This TypeScript library aims to simplify the task of generating form fields base
 npm install zod @jcb/zod-forms
 ```
 
+## Example
+
+Below shows an example in svelte
+
+```svelte
+<script lang="ts">
+  import { z } from 'zod';
+  import { generateForm } from '@jlaf/zod-forms';
+
+  const userSchema = z.object({
+    name: z.string(),
+    age: z.number(),
+  });
+  
+  const formFields = generateForm(userSchema, {
+    name: {
+      label: 'First name'
+    }
+  })
+  
+  let value: z.infer<userSchema> = userSchema.default()
+</script>
+
+{#each Object.entries(formFields) as [key, formField]}
+    <label for="key">{formField.meta?.label || key}</label>
+    <input bind:value="value[key]" />
+{/each}
+<input>
+```
+
+This setup seems trivial when first looking at it. However, zod-forms is created to work alongside a database layer such as `prisma` or `drizzle` where you don't generate your own zod schemas.
+
 ## Usage
 
 This libary revolves around the `FormField` type. The typelooks as follows:
