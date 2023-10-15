@@ -72,11 +72,3 @@ declare module '@jlaf/zod-forms' {
 
 ## Contributing
 Feel free to open issues or submit PRs to enhance the functionalities.
-
-## License
-Choose a license and mention it here.
-
-That should give a comprehensive understanding of how to use this library. Make sure to add/remove sections as you see fit.
-
-
-
