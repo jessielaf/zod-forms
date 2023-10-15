@@ -36,7 +36,6 @@ Below shows an example in svelte
     <label for="key">{formField.meta?.label || key}</label>
     <input bind:value="value[key]" />
 {/each}
-<input>
 ```
 
 This setup seems trivial when first looking at it. However, zod-forms is created to work alongside a database layer such as `prisma` or `drizzle` where you don't generate your own zod schemas.
