@@ -1,15 +1,15 @@
 # @jcb/zod-forms
 
-# Overview
+## Overview
 This TypeScript library aims to simplify the task of generating form fields based on Zod schemas. If you're building forms and using Zod for validation, this library will automate much of the heavy lifting. It provides functionalities to generate form fields with meta-information that could be used for rendering the fields on the frontend.
 
-# Installation
+## Installation
 
 ```
 npm install zod @jcb/zod-forms
 ```
 
-# Usage
+## Usage
 
 This libary revolves around the `FormField` type. The typelooks as follows:
 
@@ -25,7 +25,7 @@ The main function exported by zod-forms is `generateForm`. This function returns
 
 ```typescript
 import { z } from 'zod';
-import { generateForm } from './your-library';
+import { generateForm } from '@jlaf/zod-forms';
 
 const userSchema = z.object({
   name: z.string(),
@@ -58,22 +58,22 @@ const formFields = {
 ```
 
 
-## Forcing field meta
+### Forcing field meta
 
 If you want to force the field meta to be of a certain type because you want to use it for automatic form generation you can use the following overrides:
 
 ```typescript
-declare module '@jcb/zod-forms' {
+declare module '@jlaf/zod-forms' {
   export interface FieldMeta {
     label: string
   }
 }
 ```
 
-# Contributing
+## Contributing
 Feel free to open issues or submit PRs to enhance the functionalities.
 
-# License
+## License
 Choose a license and mention it here.
 
 That should give a comprehensive understanding of how to use this library. Make sure to add/remove sections as you see fit.
