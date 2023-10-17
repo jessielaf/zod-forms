@@ -2,11 +2,11 @@ import { z } from 'zod'
 import { c } from 'vitest/dist/reporters-5f784f42'
 export interface FieldMeta {}
 
-const FieldTypes = ['text', 'number', 'boolean', 'select', 'multiselect', 'date'] as const
+export const FieldTypes = ['text', 'number', 'boolean', 'select', 'multiselect', 'date'] as const
 
 type FieldType = (typeof FieldTypes)[number]
 
-interface FormField {
+export interface FormField {
 	type: FieldType
 	zodType: z.ZodType<any>
 	meta?: FieldMeta

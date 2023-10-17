@@ -1,6 +1,6 @@
 {
   "name": "@jlaf/zod-forms",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A TypeScript library for generating form fields based on Zod schemas.",
   "keywords": ["Zod", "form", "TypeScript", "schema", "validation"],
   "homepage": "https://github.com/jessielaf/zod-forms",
