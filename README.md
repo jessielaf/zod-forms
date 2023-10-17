@@ -34,7 +34,7 @@ Below shows an example in svelte
 
 {#each Object.entries(formFields) as [key, formField]}
     <label for="key">{formField.meta?.label || key}</label>
-    <input bind:value="value[key]" />
+    <input type="formField.type" bind:value="value[key]" />
 {/each}
 ```
 
@@ -61,6 +61,7 @@ import { generateForm } from '@jlaf/zod-forms';
 const userSchema = z.object({
   name: z.string(),
   age: z.number(),
+  gender: z.enum(['Male', 'Female', 'Other'])
 });
 
 const formFields = generateForm(userSchema, {
@@ -84,6 +85,11 @@ const formFields = {
   age: {
     type: 'number',
     zodType: z.number(),
+  },
+  age: {
+    type: 'number',
+    optionItems: ['Male', 'Female', 'Other'],
+    zodType: z.enum(['Male', 'Female', 'Other']),
   }
 }
 ```

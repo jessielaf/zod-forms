@@ -30,6 +30,7 @@
     "bun-types": "latest",
     "eslint": "^8.49.0",
     "eslint-plugin-jsdoc": "^46.8.1",
+    "prettier": "^3.0.3",
     "vitest": "^0.34.6"
   },
   "peerDependencies": {
