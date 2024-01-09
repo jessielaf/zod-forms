@@ -1,42 +1,49 @@
 {
-  "name": "@jlaf/zod-forms",
-  "version": "0.0.2",
-  "description": "A TypeScript library for generating form fields based on Zod schemas.",
-  "keywords": ["Zod", "form", "TypeScript", "schema", "validation"],
-  "homepage": "https://github.com/jessielaf/zod-forms",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/jessielaf/zod-forms"
-  },
-  "author": "Your Name <youremail@example.com>",
-  "license": "MIT",
-  "main": "out/index.js",
-  "module": "index.js",
-  "type": "module",
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "scripts": {
-    "build": "bun build src/index.js --outdir ./out --external zod"
-  },
-  "files": [
-    "dist/*",
-    "src/*",
-    "package.json",
-    "README.md",
-    "LICENSE"
-  ],
-  "devDependencies": {
-    "bun-types": "latest",
-    "eslint": "^8.49.0",
-    "eslint-plugin-jsdoc": "^46.8.1",
-    "prettier": "^3.0.3",
-    "vitest": "^0.34.6"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "zod": "^3.22.2"
-  }
+	"name": "@jlaf/zod-forms",
+	"version": "0.0.6",
+	"description": "A TypeScript library for generating form fields based on Zod schemas.",
+	"keywords": [
+		"Zod",
+		"form",
+		"TypeScript",
+		"schema",
+		"validation"
+	],
+	"homepage": "https://github.com/jessielaf/zod-forms",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jessielaf/zod-forms"
+	},
+	"author": "Your Name <youremail@example.com>",
+	"license": "MIT",
+	"main": "out/index.js",
+	"module": "out/index.js",
+	"type": "module",
+	"engines": {
+		"node": ">=14.0.0"
+	},
+	"scripts": {
+		"build": "bun build src/index.ts --outdir ./out --external zod",
+		"publish": "bun run build && npm publish"
+	},
+	"files": [
+		"dist/*",
+		"src/*",
+		"package.json",
+		"README.md",
+		"LICENSE"
+	],
+	"devDependencies": {
+		"bun-types": "latest",
+		"eslint": "^8.49.0",
+		"eslint-plugin-jsdoc": "^46.8.1",
+		"prettier": "^3.0.3",
+		"vitest": "^0.34.6"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"zod": "^3.22.2"
+	}
 }

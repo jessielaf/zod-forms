@@ -87,8 +87,30 @@ describe('Test getFormField', () => {
 	})
 
 	test("generateFormField defaults to 'string' for unsupported types", () => {
-		// Create a custom Zod type or use any unsupported Zod type
 		const zodType = z.any()
+		const formField = generateFormField({ zodType })
+
+		expect(formField).toEqual({
+			type: 'string',
+			input: 'input',
+			zodType,
+		})
+	})
+
+	test("generateFormField identifies ZodLiteral as 'boolean'", () => {
+		const zodType = z.literal(true)
+		const formField = generateFormField({ zodType })
+
+		expect(formField).toEqual({
+			type: 'boolean',
+			input: 'boolean',
+			zodType,
+		})
+	})
+
+	test("generateFormField identifies ZodLiteral as 'string'", () => {
+		// Create a custom Zod type or use any unsupported Zod type
+		const zodType = z.literal('test')
 		const formField = generateFormField({ zodType })
 
 		expect(formField).toEqual({

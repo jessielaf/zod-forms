@@ -7,6 +7,13 @@ export const InputTypes = ['input', 'boolean', 'select', 'multiselect', 'date', 
 type FieldType = (typeof FieldTypes)[number]
 type InputType = (typeof InputTypes)[number]
 
+const defaultFieldToInput: Record<FieldType, InputType> = {
+	string: 'input',
+	number: 'input',
+	boolean: 'boolean',
+	array: 'multiselect',
+	date: 'date',
+}
 export interface FormField {
 	type: Omit<FieldType, 'select' | 'multiselect' | 'select'>
 	input: InputType
@@ -46,7 +53,7 @@ export const generateFormField = (
 	if (strippedZodType instanceof z.ZodBoolean) {
 		return {
 			type: 'boolean',
-			input: 'boolean',
+			input: defaultFieldToInput.boolean,
 			...formField,
 		}
 	} else if (strippedZodType instanceof z.ZodNumber) {
@@ -64,7 +71,7 @@ export const generateFormField = (
 
 		return {
 			type: 'number',
-			input: 'input',
+			input: defaultFieldToInput.number,
 			...formField,
 		}
 	} else if (strippedZodType instanceof z.ZodEnum) {
@@ -78,13 +85,23 @@ export const generateFormField = (
 		return {
 			...generateFormField({ zodType: strippedZodType._def.type }),
 			type: 'array',
-			input: 'multiselect',
+			input: defaultFieldToInput.array,
 			...formField,
 		}
 	} else if (strippedZodType instanceof z.ZodDate) {
 		return {
 			type: 'date',
-			input: 'date',
+			input: defaultFieldToInput.date,
+			...formField,
+		}
+	} else if (strippedZodType instanceof z.ZodLiteral) {
+		const literalType = typeof strippedZodType._def.value
+		const calcType = FieldTypes.includes(literalType as FieldType)
+			? (literalType as FieldType)
+			: 'string'
+		return {
+			type: calcType,
+			input: defaultFieldToInput[calcType] || 'input',
 			...formField,
 		}
 	}
