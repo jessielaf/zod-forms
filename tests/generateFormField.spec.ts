@@ -8,6 +8,7 @@ describe('Test getFormField', () => {
 		const formField = generateFormField({ zodType })
 		expect(formField).toEqual({
 			type: 'boolean',
+			input: 'boolean',
 			zodType,
 		})
 	})
@@ -17,7 +18,8 @@ describe('Test getFormField', () => {
 		const formField = generateFormField({ zodType })
 
 		expect(formField).toEqual({
-			type: 'text',
+			type: 'string',
+			input: 'input',
 			zodType,
 		})
 	})
@@ -27,8 +29,37 @@ describe('Test getFormField', () => {
 		const formField = generateFormField({ zodType })
 
 		expect(formField).toEqual({
-			type: 'select',
+			type: 'string',
 			optionItems: ['Option1', 'Option2'],
+			input: 'select',
+			zodType,
+		})
+	})
+
+	test("generateFormField identifies ZodNumber as 'input'", () => {
+		const zodType = z.number()
+		const formField = generateFormField({ zodType })
+
+		expect(formField).toEqual({
+			type: 'number',
+			input: 'input',
+			zodType,
+		})
+	})
+
+	test("generateFormField identifies ZodNumber as 'range'", () => {
+		const min = 0
+		const max = 10
+		const zodType = z.number().min(min).max(max)
+		const formField = generateFormField({ zodType })
+
+		expect(formField).toEqual({
+			type: 'number',
+			input: 'range',
+			range: {
+				min,
+				max,
+			},
 			zodType,
 		})
 	})
@@ -38,7 +69,8 @@ describe('Test getFormField', () => {
 		const formField = generateFormField({ zodType })
 
 		expect(formField).toEqual({
-			type: 'multiselect',
+			type: 'array',
+			input: 'multiselect',
 			zodType,
 		})
 	})
@@ -49,17 +81,19 @@ describe('Test getFormField', () => {
 
 		expect(formField).toEqual({
 			type: 'date',
+			input: 'date',
 			zodType,
 		})
 	})
 
-	test("generateFormField defaults to 'text' for unsupported types", () => {
+	test("generateFormField defaults to 'string' for unsupported types", () => {
 		// Create a custom Zod type or use any unsupported Zod type
 		const zodType = z.any()
 		const formField = generateFormField({ zodType })
 
 		expect(formField).toEqual({
-			type: 'text',
+			type: 'string',
+			input: 'input',
 			zodType,
 		})
 	})

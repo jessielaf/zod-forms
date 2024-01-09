@@ -1,4 +1,4 @@
-# @jcb/zod-forms
+# @jlaf/zod-forms
 
 ## Overview
 This TypeScript library aims to simplify the task of generating form fields based on Zod schemas. If you're building forms and using Zod for validation, this library will automate much of the heavy lifting. It provides functionalities to generate form fields with meta-information that could be used for rendering the fields on the frontend.
@@ -6,7 +6,7 @@ This TypeScript library aims to simplify the task of generating form fields base
 ## Installation
 
 ```
-npm install zod @jcb/zod-forms
+npm install zod @jlaf/zod-forms
 ```
 
 ## Example
@@ -46,7 +46,8 @@ This libary revolves around the `FormField` type. The typelooks as follows:
 
 ```typescript
 interface FormField {
-  type: ['text', 'number', 'boolean', 'select', 'multiselect', 'date'];
+  type: ['string', 'number', 'boolean', 'array', 'date'];
+  input: ['input', 'boolean', 'select', 'multiselect', 'date', 'range'];
   zodType: z.ZodType<any>;
   meta?: FieldMeta;
 }
@@ -76,7 +77,8 @@ The **generated** object will look like the following:
 ```typescript
 const formFields = {
   name: {
-    type: 'text',
+    type: 'string',
+    input: 'input',
     zodType: z.string(),
     meta: {
       label: 'Firstname'
@@ -84,10 +86,12 @@ const formFields = {
   },
   age: {
     type: 'number',
+    input: 'input',
     zodType: z.number(),
   },
   age: {
-    type: 'number',
+    type: 'string',
+    input: 'select',
     optionItems: ['Male', 'Female', 'Other'],
     zodType: z.enum(['Male', 'Female', 'Other']),
   }

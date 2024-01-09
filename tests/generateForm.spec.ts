@@ -11,8 +11,8 @@ describe('Generate form', () => {
 
 		const result = generateForm(schema)
 		expect(result).toEqual({
-			field1: { type: 'text', zodType: schema._def.shape().field1 },
-			field2: { type: 'number', zodType: schema._def.shape().field2 },
+			field1: { type: 'string', input: 'input', zodType: schema._def.shape().field1 },
+			field2: { type: 'number', input: 'input', zodType: schema._def.shape().field2 },
 		})
 	})
 
@@ -24,7 +24,12 @@ describe('Generate form', () => {
 
 		const result = generateForm(schema, meta)
 		expect(result).toEqual({
-			field1: { type: 'text', zodType: schema._def.shape().field1, meta: { someMeta: 'info' } },
+			field1: {
+				type: 'string',
+				input: 'input',
+				zodType: schema._def.shape().field1,
+				meta: { someMeta: 'info' },
+			},
 		})
 	})
 
@@ -36,7 +41,7 @@ describe('Generate form', () => {
 			.refine(() => {})
 		const result = generateForm(schema)
 		expect(result).toEqual({
-			field1: { type: 'text', zodType: schema.innerType()._def.shape().field1 },
+			field1: { type: 'string', input: 'input', zodType: schema.innerType()._def.shape().field1 },
 		})
 	})
 
@@ -48,7 +53,7 @@ describe('Generate form', () => {
 			.transform(() => {})
 		const result = generateForm(schema)
 		expect(result).toEqual({
-			field1: { type: 'text', zodType: schema.innerType()._def.shape().field1 },
+			field1: { type: 'string', input: 'input', zodType: schema.innerType()._def.shape().field1 },
 		})
 	})
 })
