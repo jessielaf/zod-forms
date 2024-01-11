@@ -77,23 +77,26 @@ The **generated** object will look like the following:
 ```typescript
 const formFields = {
   name: {
+    accessor: 'name',
     type: 'string',
     input: 'input',
-    zodType: z.string(),
+    validator: z.string(),
     meta: {
       label: 'Firstname'
     }
   },
   age: {
+    accessor: 'age',
     type: 'number',
     input: 'input',
-    zodType: z.number(),
+    validator: z.number(),
   },
-  age: {
+  gender: {
+    accessor: 'gender',
     type: 'string',
     input: 'select',
     optionItems: ['Male', 'Female', 'Other'],
-    zodType: z.enum(['Male', 'Female', 'Other']),
+    validator: z.enum(['Male', 'Female', 'Other']),
   }
 }
 ```

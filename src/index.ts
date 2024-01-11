@@ -14,21 +14,18 @@ const defaultFieldToInput: Record<FieldType, InputType> = {
 	array: 'multiselect',
 	date: 'date',
 }
+
 export interface FormField {
+	accessor: string
 	type: Omit<FieldType, 'select' | 'multiselect' | 'select'>
 	input: InputType
-	zodType: z.ZodType<any>
+	validator: z.ZodType<any>
 	meta?: FieldMeta
 }
 
 export interface SelectFormField extends FormField {
 	input: 'select' | 'multiselect'
 	optionItems?: string[]
-}
-
-export interface RangeFormField extends FormField {
-	input: 'range'
-	range?: { min: number; max: number }
 }
 
 type AllowedObjects = z.AnyZodObject | z.ZodEffects<any, any, any> | z.ZodTransformer<any, any, any>
@@ -46,9 +43,9 @@ export const stripZodType = (zodType: z.ZodType) => {
 }
 
 export const generateFormField = (
-	formField: Omit<FormField, 'type' | 'input'>,
-): FormField | RangeFormField | SelectFormField => {
-	const strippedZodType = stripZodType(formField.zodType)
+	formField: Omit<FormField, 'type' | 'input' | 'accessor'>,
+): Omit<FormField, 'accessor'> | Omit<SelectFormField, 'accessor'> => {
+	const strippedZodType = stripZodType(formField.validator)
 
 	if (strippedZodType instanceof z.ZodBoolean) {
 		return {
@@ -57,18 +54,6 @@ export const generateFormField = (
 			...formField,
 		}
 	} else if (strippedZodType instanceof z.ZodNumber) {
-		if (Number.isFinite(strippedZodType.maxValue) && Number.isFinite(strippedZodType.minValue)) {
-			return {
-				type: 'number',
-				input: 'range',
-				range: {
-					min: strippedZodType.minValue as number,
-					max: strippedZodType.maxValue as number,
-				},
-				...formField,
-			}
-		}
-
 		return {
 			type: 'number',
 			input: defaultFieldToInput.number,
@@ -83,7 +68,7 @@ export const generateFormField = (
 		}
 	} else if (strippedZodType instanceof z.ZodArray) {
 		return {
-			...generateFormField({ zodType: strippedZodType._def.type }),
+			...generateFormField({ validator: strippedZodType._def.type }),
 			type: 'array',
 			input: defaultFieldToInput.array,
 			...formField,
@@ -129,7 +114,13 @@ export const generateForm = <T extends AllowedObjects>(
 
 	return Object.fromEntries(
 		Object.entries(strippedSchema._def.shape()).map(([key, value]) => {
-			return [key, generateFormField({ zodType: value as z.ZodType<any>, meta: meta?.[key] })]
+			return [
+				key,
+				{
+					accessor: key,
+					...generateFormField({ validator: value as z.ZodType<any>, meta: meta?.[key] }),
+				},
+			]
 		}),
 	)
 }

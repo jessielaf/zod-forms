@@ -11,8 +11,18 @@ describe('Generate form', () => {
 
 		const result = generateForm(schema)
 		expect(result).toEqual({
-			field1: { type: 'string', input: 'input', zodType: schema._def.shape().field1 },
-			field2: { type: 'number', input: 'input', zodType: schema._def.shape().field2 },
+			field1: {
+				accessor: 'field1',
+				type: 'string',
+				input: 'input',
+				validator: schema._def.shape().field1,
+			},
+			field2: {
+				accessor: 'field2',
+				type: 'number',
+				input: 'input',
+				validator: schema._def.shape().field2,
+			},
 		})
 	})
 
@@ -25,9 +35,10 @@ describe('Generate form', () => {
 		const result = generateForm(schema, meta)
 		expect(result).toEqual({
 			field1: {
+				accessor: 'field1',
 				type: 'string',
 				input: 'input',
-				zodType: schema._def.shape().field1,
+				validator: schema._def.shape().field1,
 				meta: { someMeta: 'info' },
 			},
 		})
@@ -41,7 +52,12 @@ describe('Generate form', () => {
 			.refine(() => {})
 		const result = generateForm(schema)
 		expect(result).toEqual({
-			field1: { type: 'string', input: 'input', zodType: schema.innerType()._def.shape().field1 },
+			field1: {
+				accessor: 'field1',
+				type: 'string',
+				input: 'input',
+				validator: schema.innerType()._def.shape().field1,
+			},
 		})
 	})
 
@@ -53,7 +69,12 @@ describe('Generate form', () => {
 			.transform(() => {})
 		const result = generateForm(schema)
 		expect(result).toEqual({
-			field1: { type: 'string', input: 'input', zodType: schema.innerType()._def.shape().field1 },
+			field1: {
+				accessor: 'field1',
+				type: 'string',
+				input: 'input',
+				validator: schema.innerType()._def.shape().field1,
+			},
 		})
 	})
 })
