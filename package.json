@@ -1,7 +1,17 @@
 {
 	"name": "@jlaf/zod-forms",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "A TypeScript library for generating form fields based on Zod schemas.",
+	"license": "MIT",
+	"engines": {
+		"node": ">=14.0.0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/jessielaf/zod-forms"
+	},
+	"homepage": "https://github.com/jessielaf/zod-forms",
+	"author": "Jessie Liauw A Fong <jessie@jcbdevelopment.com>",
 	"keywords": [
 		"Zod",
 		"form",
@@ -9,41 +19,49 @@
 		"schema",
 		"validation"
 	],
-	"homepage": "https://github.com/jessielaf/zod-forms",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jessielaf/zod-forms"
-	},
-	"author": "Your Name <youremail@example.com>",
-	"license": "MIT",
-	"main": "out/index.js",
-	"module": "out/index.js",
 	"type": "module",
-	"engines": {
-		"node": ">=14.0.0"
+	"main": "./dist/index.mjs",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		}
 	},
-	"scripts": {
-		"build": "bun build src/index.ts --outdir ./out --external zod",
-		"publish": "bun run build && npm publish"
-	},
+	"module": "./dist/index.mjs",
 	"files": [
-		"dist/*",
-		"src/*",
+		"dist",
 		"package.json",
 		"README.md",
 		"LICENSE"
 	],
-	"devDependencies": {
-		"bun-types": "latest",
-		"eslint": "^8.49.0",
-		"eslint-plugin-jsdoc": "^46.8.1",
-		"prettier": "^3.0.3",
-		"vitest": "^0.34.6"
+	"scripts": {
+		"build": "unbuild",
+		"dev": "unbuild --stub",
+		"lint": "eslint .",
+		"prepare": "simple-git-hooks",
+		"prepublishOnly": "yarn run build",
+		"release": "bumpp && npm publish",
+		"test": "vitest",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"zod": "^3.22.2"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"
 	},
-	"dependencies": {
-		"zod": "^3.22.2"
+	"devDependencies": {
+		"@antfu/eslint-config": "2.20.0",
+		"bumpp": "9.4.1",
+		"bun-types": "latest",
+		"eslint": "^8.49.0",
+		"eslint-plugin-jsdoc": "^46.8.1",
+		"lint-staged": "15.2.5",
+		"prettier": "^3.0.3",
+		"rimraf": "5.0.7",
+		"simple-git-hooks": "2.11.1",
+		"unbuild": "2.0.0",
+		"vitest": "^0.34.6"
 	}
 }
