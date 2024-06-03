@@ -30,7 +30,7 @@ export interface SelectFormField extends FormField {
 
 type AllowedObjects = z.AnyZodObject | z.ZodEffects<any, any, any> | z.ZodTransformer<any, any, any>
 
-export const stripZodType = (zodType: z.ZodType) => {
+export const stripZodType = (zodType: z.ZodType): z.ZodType => {
 	if (
 		zodType instanceof z.ZodDefault ||
 		zodType instanceof z.ZodOptional ||
