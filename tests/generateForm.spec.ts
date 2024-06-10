@@ -29,6 +29,7 @@ describe('Generate form', () => {
 	test('generateForm with meta overrides', () => {
 		const schema = z.object({
 			field1: z.string(),
+			field2: z.string(),
 		})
 		const meta = { field1: { someMeta: 'info' } }
 

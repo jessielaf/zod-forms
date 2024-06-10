@@ -2,10 +2,10 @@ import { z } from 'zod'
 export interface FieldMeta {}
 
 export const FieldTypes = ['string', 'number', 'boolean', 'array', 'date'] as const
-export const InputTypes = ['input', 'boolean', 'select', 'multiselect', 'date', 'range'] as const
+export const InputTypes = ['input', 'boolean', 'select', 'multiselect', 'date'] as const
 
-type FieldType = (typeof FieldTypes)[number]
-type InputType = (typeof InputTypes)[number]
+export type FieldType = (typeof FieldTypes)[number]
+export type InputType = (typeof InputTypes)[number]
 
 const defaultFieldToInput: Record<FieldType, InputType> = {
 	string: 'input',
@@ -108,7 +108,7 @@ const stripZodObject = (schema: AllowedObjects): z.AnyZodObject => {
 
 export const generateForm = <T extends AllowedObjects>(
 	schema: T,
-	meta?: Record<keyof z.infer<T>, FieldMeta>,
+	meta?: Partial<Record<keyof z.infer<T>, FieldMeta>>,
 ): Record<string, FormField> => {
 	const strippedSchema = stripZodObject(schema)
 
