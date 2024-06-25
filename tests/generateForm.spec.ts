@@ -40,7 +40,13 @@ describe('Generate form', () => {
 				type: 'string',
 				input: 'input',
 				validator: schema._def.shape().field1,
-				meta: { someMeta: 'info' },
+				someMeta: 'info',
+			},
+			field2: {
+				accessor: 'field2',
+				type: 'string',
+				input: 'input',
+				validator: schema._def.shape().field2,
 			},
 		})
 	})

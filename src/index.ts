@@ -1,8 +1,21 @@
 import { z } from 'zod'
+
 export interface FieldMeta {}
 
-export const FieldTypes = ['string', 'number', 'boolean', 'array', 'date'] as const
-export const InputTypes = ['input', 'boolean', 'select', 'multiselect', 'date'] as const
+export const FieldTypes = [
+	'string',
+	'number',
+	'boolean',
+	'array',
+	'date',
+] as const
+export const InputTypes = [
+	'input',
+	'boolean',
+	'select',
+	'multiselect',
+	'date',
+] as const
 
 export type FieldType = (typeof FieldTypes)[number]
 export type InputType = (typeof InputTypes)[number]
@@ -15,22 +28,30 @@ const defaultFieldToInput: Record<FieldType, InputType> = {
 	date: 'date',
 }
 
-export interface FormField {
+export interface BaseFormField extends FieldMeta {
 	accessor: string
-	type: Omit<FieldType, 'select' | 'multiselect' | 'select'>
+	type: Omit<FieldType, 'select' | 'multiselect'>
 	input: InputType
 	validator: z.ZodType<any>
-	meta?: FieldMeta
 }
 
-export interface SelectFormField extends FormField {
+export interface SelectFormField extends BaseFormField {
 	input: 'select' | 'multiselect'
 	optionItems?: string[]
 }
 
-type AllowedObjects = z.AnyZodObject | z.ZodEffects<any, any, any> | z.ZodTransformer<any, any, any>
+export function isSelectFormField(field: FormField): field is SelectFormField {
+	return field.input === 'select' || field.input === 'multiselect'
+}
 
-export const stripZodType = (zodType: z.ZodType): z.ZodType => {
+export type FormField = BaseFormField | SelectFormField
+
+type AllowedObjects =
+	| z.AnyZodObject
+	| z.ZodEffects<any, any, any>
+	| z.ZodTransformer<any, any, any>
+
+export function stripZodType(zodType: z.ZodType): z.ZodType {
 	if (
 		zodType instanceof z.ZodDefault ||
 		zodType instanceof z.ZodOptional ||
@@ -42,9 +63,9 @@ export const stripZodType = (zodType: z.ZodType): z.ZodType => {
 	return zodType
 }
 
-export const generateFormField = (
-	formField: Omit<FormField, 'type' | 'input' | 'accessor'>,
-): Omit<FormField, 'accessor'> | Omit<SelectFormField, 'accessor'> => {
+export function generateFormField(
+	formField: Omit<FormField, 'type' | 'input' | 'accessor'>
+): Omit<FormField, 'accessor'> {
 	const strippedZodType = stripZodType(formField.validator)
 
 	if (strippedZodType instanceof z.ZodBoolean) {
@@ -65,7 +86,7 @@ export const generateFormField = (
 			input: 'select',
 			optionItems: strippedZodType._def.values,
 			...formField,
-		}
+		} as Omit<SelectFormField, 'accessor'>
 	} else if (strippedZodType instanceof z.ZodArray) {
 		return {
 			...generateFormField({ validator: strippedZodType._def.type }),
@@ -98,7 +119,7 @@ export const generateFormField = (
 	}
 }
 
-const stripZodObject = (schema: AllowedObjects): z.AnyZodObject => {
+function stripZodObject(schema: AllowedObjects): z.AnyZodObject {
 	if (schema instanceof z.ZodEffects || schema instanceof z.ZodTransformer) {
 		return schema._def.schema
 	}
@@ -106,10 +127,10 @@ const stripZodObject = (schema: AllowedObjects): z.AnyZodObject => {
 	return schema
 }
 
-export const generateForm = <T extends AllowedObjects>(
+export function generateForm<T extends AllowedObjects>(
 	schema: T,
-	meta?: Partial<Record<keyof z.infer<T>, FieldMeta>>,
-): Record<string, FormField> => {
+	overwrite?: Partial<Record<keyof z.infer<T>, Partial<FormField>>>
+): Record<string, FormField> {
 	const strippedSchema = stripZodObject(schema)
 
 	return Object.fromEntries(
@@ -118,9 +139,10 @@ export const generateForm = <T extends AllowedObjects>(
 				key,
 				{
 					accessor: key,
-					...generateFormField({ validator: value as z.ZodType<any>, meta: meta?.[key] }),
+					...generateFormField({ validator: value as z.ZodType<any> }),
+					...overwrite?.[key],
 				},
 			]
-		}),
+		})
 	)
 }

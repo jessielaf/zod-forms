@@ -22,13 +22,13 @@ Below shows an example in svelte
     name: z.string(),
     age: z.number(),
   });
-  
+
   const formFields = generateForm(userSchema, {
     name: {
       label: 'First name'
     }
   })
-  
+
   let value: z.infer<userSchema> = userSchema.default()
 </script>
 
@@ -46,61 +46,60 @@ This libary revolves around the `FormField` type. The typelooks as follows:
 
 ```typescript
 interface FormField {
-  type: ['string', 'number', 'boolean', 'array', 'date'];
-  input: ['input', 'boolean', 'select', 'multiselect', 'date', 'range'];
-  zodType: z.ZodType<any>;
-  meta?: FieldMeta;
+	type: ['string', 'number', 'boolean', 'array', 'date']
+	input: ['input', 'boolean', 'select', 'multiselect', 'date', 'range']
+	zodType: z.ZodType<any>
+	meta?: FieldMeta
 }
 ```
 
 The main function exported by zod-forms is `generateForm`. This function returns a `Record<string, FormField>`. The usage looks as following:
 
 ```typescript
-import { z } from 'zod';
-import { generateForm } from '@jlaf/zod-forms';
+import { z } from 'zod'
+import { generateForm } from '@jlaf/zod-forms'
 
 const userSchema = z.object({
-  name: z.string(),
-  age: z.number(),
-  gender: z.enum(['Male', 'Female', 'Other'])
-});
+	name: z.string(),
+	age: z.number(),
+	gender: z.enum(['Male', 'Female', 'Other'])
+})
 
 const formFields = generateForm(userSchema, {
-  name: {
-    label: 'Firstname'
-  }
-});
+	name: {
+		label: 'Firstname'
+	}
+})
 ```
 
 The **generated** object will look like the following:
 
 ```typescript
 const formFields = {
-  name: {
-    accessor: 'name',
-    type: 'string',
-    input: 'input',
-    validator: z.string(),
-    meta: {
-      label: 'Firstname'
-    }
-  },
-  age: {
-    accessor: 'age',
-    type: 'number',
-    input: 'input',
-    validator: z.number(),
-  },
-  gender: {
-    accessor: 'gender',
-    type: 'string',
-    input: 'select',
-    optionItems: ['Male', 'Female', 'Other'],
-    validator: z.enum(['Male', 'Female', 'Other']),
-  }
+	name: {
+		accessor: 'name',
+		type: 'string',
+		input: 'input',
+		validator: z.string(),
+		meta: {
+			label: 'Firstname'
+		}
+	},
+	age: {
+		accessor: 'age',
+		type: 'number',
+		input: 'input',
+		validator: z.number(),
+	},
+	gender: {
+		accessor: 'gender',
+		type: 'string',
+		input: 'select',
+		optionItems: ['Male', 'Female', 'Other'],
+		validator: z.enum(['Male', 'Female', 'Other']),
+	}
 }
 ```
-
 
 ### Forcing field meta
 
@@ -108,9 +107,9 @@ If you want to force the field meta to be of a certain type because you want to 
 
 ```typescript
 declare module '@jlaf/zod-forms' {
-  export interface FieldMeta {
-    label: string
-  }
+	export interface FieldMeta {
+		label: string
+	}
 }
 ```
 
