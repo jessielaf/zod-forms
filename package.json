@@ -1,7 +1,7 @@
 {
 	"name": "@jlaf/zod-forms",
 	"type": "module",
-	"version": "0.0.7",
+	"version": "0.0.8",
 	"description": "A TypeScript library for generating form fields based on Zod schemas.",
 	"author": "Jessie Liauw A Fong <jessie@jcbdevelopment.com>",
 	"license": "MIT",
