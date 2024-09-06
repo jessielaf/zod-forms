@@ -1,9 +1,9 @@
-import { describe, expect, it } from "vitest"
-import { z } from "zod"
-import { generateForm } from "../src/index.js" // Replace with your actual module name
+import { describe, expect, it } from 'vitest'
+import { z } from 'zod'
+import { generateForm } from '../src/index.js' // Replace with your actual module name
 
-describe("generate form", () => {
-  it("generateForm with simple schema", () => {
+describe('generate form', () => {
+  it('generateForm with simple schema', () => {
     const schema = z.object({
       field1: z.string(),
       field2: z.number(),
@@ -12,39 +12,39 @@ describe("generate form", () => {
     const result = generateForm(schema)
     expect(result).toEqual({
       field1: {
-        accessor: "field1",
-        type: "string",
-        input: "input",
+        accessor: 'field1',
+        type: 'string',
+        input: 'input',
         validator: schema._def.shape().field1,
       },
       field2: {
-        accessor: "field2",
-        type: "number",
-        input: "input",
+        accessor: 'field2',
+        type: 'number',
+        input: 'input',
         validator: schema._def.shape().field2,
       },
     })
   })
 
-  it("generateForm with meta overrides", () => {
+  it('generateForm with meta overrides', () => {
     const schema = z.object({
       field1: z.string(),
     })
-    const meta = { field1: { someMeta: "info" } }
+    const meta = { field1: { someMeta: 'info' } }
 
     const result = generateForm(schema, meta)
     expect(result).toEqual({
       field1: {
-        accessor: "field1",
-        type: "string",
-        input: "input",
+        accessor: 'field1',
+        type: 'string',
+        input: 'input',
         validator: schema._def.shape().field1,
-        meta: { someMeta: "info" },
+        meta: { someMeta: 'info' },
       },
     })
   })
 
-  it("generateForm with refine", () => {
+  it('generateForm with refine', () => {
     const schema = z
       .object({
         field1: z.string(),
@@ -53,15 +53,15 @@ describe("generate form", () => {
     const result = generateForm(schema)
     expect(result).toEqual({
       field1: {
-        accessor: "field1",
-        type: "string",
-        input: "input",
+        accessor: 'field1',
+        type: 'string',
+        input: 'input',
         validator: schema.innerType()._def.shape().field1,
       },
     })
   })
 
-  it("generateForm with transform", () => {
+  it('generateForm with transform', () => {
     const schema = z
       .object({
         field1: z.string(),
@@ -70,9 +70,9 @@ describe("generate form", () => {
     const result = generateForm(schema)
     expect(result).toEqual({
       field1: {
-        accessor: "field1",
-        type: "string",
-        input: "input",
+        accessor: 'field1',
+        type: 'string',
+        input: 'input',
         validator: schema.innerType()._def.shape().field1,
       },
     })

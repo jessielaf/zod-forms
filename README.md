@@ -22,13 +22,13 @@ Below shows an example in svelte
     name: z.string(),
     age: z.number(),
   });
-  
+
   const formFields = generateForm(userSchema, {
     name: {
       label: 'First name'
     }
   })
-  
+
   let value: z.infer<userSchema> = userSchema.default()
 </script>
 
@@ -56,20 +56,20 @@ interface FormField {
 The main function exported by zod-forms is `generateForm`. This function returns a `Record<string, FormField>`. The usage looks as following:
 
 ```typescript
-import { z } from 'zod';
-import { generateForm } from '@jlaf/zod-forms';
+import { z } from 'zod'
+import { generateForm } from '@jlaf/zod-forms'
 
 const userSchema = z.object({
   name: z.string(),
   age: z.number(),
   gender: z.enum(['Male', 'Female', 'Other'])
-});
+})
 
 const formFields = generateForm(userSchema, {
   name: {
     label: 'Firstname'
   }
-});
+})
 ```
 
 The **generated** object will look like the following:
@@ -100,7 +100,6 @@ const formFields = {
   }
 }
 ```
-
 
 ### Forcing field meta
 
