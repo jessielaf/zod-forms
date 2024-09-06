@@ -1,67 +1,67 @@
 {
-	"name": "@jlaf/zod-forms",
-	"version": "0.0.7",
-	"description": "A TypeScript library for generating form fields based on Zod schemas.",
-	"license": "MIT",
-	"engines": {
-		"node": ">=14.0.0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/jessielaf/zod-forms"
-	},
-	"homepage": "https://github.com/jessielaf/zod-forms",
-	"author": "Jessie Liauw A Fong <jessie@jcbdevelopment.com>",
-	"keywords": [
-		"Zod",
-		"form",
-		"TypeScript",
-		"schema",
-		"validation"
-	],
-	"type": "module",
-	"main": "./dist/index.mjs",
-	"exports": {
-		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.mjs",
-			"require": "./dist/index.cjs"
-		}
-	},
-	"module": "./dist/index.mjs",
-	"files": [
-		"dist",
-		"package.json",
-		"README.md",
-		"LICENSE"
-	],
-	"scripts": {
-		"build": "unbuild",
-		"dev": "unbuild --stub",
-		"lint": "eslint .",
-		"prepare": "simple-git-hooks",
-		"prepublishOnly": "yarn run build",
-		"release": "bumpp && npm publish",
-		"test": "vitest",
-		"typecheck": "tsc --noEmit"
-	},
-	"dependencies": {
-		"zod": "^3.22.2"
-	},
-	"peerDependencies": {
-		"typescript": "^5.0.0"
-	},
-	"devDependencies": {
-		"@antfu/eslint-config": "2.20.0",
-		"bumpp": "9.4.1",
-		"bun-types": "latest",
-		"eslint": "^8.49.0",
-		"eslint-plugin-jsdoc": "^46.8.1",
-		"lint-staged": "15.2.5",
-		"prettier": "^3.0.3",
-		"rimraf": "5.0.7",
-		"simple-git-hooks": "2.11.1",
-		"unbuild": "2.0.0",
-		"vitest": "^0.34.6"
-	}
+  "name": "@jlaf/zod-forms",
+  "type": "module",
+  "version": "0.0.7",
+  "description": "A TypeScript library for generating form fields based on Zod schemas.",
+  "author": "Jessie Liauw A Fong <jessie@jcbdevelopment.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/jessielaf/zod-forms",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jessielaf/zod-forms"
+  },
+  "keywords": [
+    "Zod",
+    "form",
+    "TypeScript",
+    "schema",
+    "validation"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist",
+    "package.json"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "build": "unbuild",
+    "dev": "unbuild --stub",
+    "lint": "eslint .",
+    "prepare": "simple-git-hooks",
+    "prepublishOnly": "yarn run build",
+    "release": "bumpp && npm publish",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "2.20.0",
+    "bumpp": "9.4.1",
+    "bun-types": "latest",
+    "eslint": "^8.49.0",
+    "eslint-plugin-jsdoc": "^46.8.1",
+    "lint-staged": "15.2.5",
+    "prettier": "^3.0.3",
+    "rimraf": "5.0.7",
+    "simple-git-hooks": "2.11.1",
+    "unbuild": "2.0.0",
+    "vitest": "^0.34.6"
+  }
 }
