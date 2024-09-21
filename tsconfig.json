@@ -1,16 +1,16 @@
 {
-	"compilerOptions": {
-		"module": "NodeNext",
-		"target": "ES6",
-		"moduleResolution": "NodeNext",
-		"outDir": "./dist",
-		"rootDir": "./src",
-		"strict": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"typeRoots": ["./node_modules/@types", "./src/types"]
-	},
-	"include": ["src/**/*.ts"],
-	"exclude": ["node_modules", "dist"]
+  "compilerOptions": {
+    "target": "ES6",
+    "rootDir": "./src",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    "strict": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
