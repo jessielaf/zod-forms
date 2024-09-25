@@ -53,9 +53,9 @@ type AllowedObjects =
 
 export function stripZodType(zodType: z.ZodType): z.ZodType {
 	if (
-		zodType instanceof z.ZodDefault ||
-		zodType instanceof z.ZodOptional ||
-		zodType instanceof z.ZodNullable
+		zodType instanceof z.ZodDefault
+		|| zodType instanceof z.ZodOptional
+		|| zodType instanceof z.ZodNullable
 	) {
 		return stripZodType(zodType._def.innerType)
 	}
@@ -64,7 +64,7 @@ export function stripZodType(zodType: z.ZodType): z.ZodType {
 }
 
 export function generateFormField(
-	formField: Omit<FormField, 'type' | 'input' | 'accessor'>
+	formField: Omit<FormField, 'type' | 'input' | 'accessor'>,
 ): Omit<FormField, 'accessor'> {
 	const strippedZodType = stripZodType(formField.validator)
 
@@ -129,7 +129,7 @@ function stripZodObject(schema: AllowedObjects): z.AnyZodObject {
 
 export function generateForm<T extends AllowedObjects>(
 	schema: T,
-	overwrite?: Partial<Record<keyof z.infer<T>, Partial<FormField>>>
+	overwrite?: Partial<Record<keyof z.infer<T>, Partial<FormField>>>,
 ): Record<string, FormField> {
 	const strippedSchema = stripZodObject(schema)
 
@@ -143,6 +143,6 @@ export function generateForm<T extends AllowedObjects>(
 					...overwrite?.[key],
 				},
 			]
-		})
+		}),
 	)
 }
